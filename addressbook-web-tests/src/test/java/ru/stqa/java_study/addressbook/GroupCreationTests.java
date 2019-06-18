@@ -37,16 +37,8 @@ public class GroupCreationTests {
     logout("Logout");
   }
 
-  private void logout(String logout) {
-    wd.findElement(By.linkText(logout)).click();
-  }
-
-  private void returnToGroupPage(String s) {
-    wd.findElement(By.linkText(s)).click();
-  }
-
-  private void submitGroupCreation(String submit) {
-    wd.findElement(By.name(submit)).click();
+  private void initGroupCreation(String s) {
+    wd.findElement(By.name(s)).click();
   }
 
   private void fillGroupForm(GroupData groupData) {
@@ -61,9 +53,17 @@ public class GroupCreationTests {
     wd.findElement(By.name("group_footer")).sendKeys(groupData.getFooter());
   }
 
-  private void initGroupCreation(String s) {
-    wd.findElement(By.name(s)).click();
+  private void submitGroupCreation(String submit) {
+    wd.findElement(By.name(submit)).click();
   }
+
+  private void returnToGroupPage(String s) {
+    wd.findElement(By.linkText(s)).click();
+  }
+  private void logout(String logout) {
+    wd.findElement(By.linkText(logout)).click();
+  }
+
 
   @AfterMethod(alwaysRun = true)
   public void tearDown() throws Exception {
