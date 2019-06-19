@@ -15,16 +15,18 @@ public class ContactCreationTests {
     wd = new ChromeDriver();
     wd.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
     wd.get("http://localhost/addressbook/");
-    login("user", "pass", "//input[@value='Login']", "admin", "secret");
+    login("admin", "secret");
   }
 
-  private void login(String user, String pass, String s, String username, String password) {
-    wd.findElement(By.name(user)).clear();
-    wd.findElement(By.name(user)).sendKeys(username);
-    wd.findElement(By.name(pass)).click();
-    wd.findElement(By.name(pass)).clear();
-    wd.findElement(By.name(pass)).sendKeys(password);
-    wd.findElement(By.xpath(s)).click();
+  private void login(String username, String password) {
+    wd.get("http://localhost/addressbook/");
+    wd.findElement(By.name("user")).click();
+    wd.findElement(By.name("user")).clear();
+    wd.findElement(By.name("user")).sendKeys(username);
+    wd.findElement(By.name("pass")).click();
+    wd.findElement(By.name("pass")).clear();
+    wd.findElement(By.name("pass")).sendKeys(password);
+    wd.findElement(By.id("LoginForm")).submit();
   }
 
 
@@ -32,9 +34,10 @@ public class ContactCreationTests {
   public void testContactCreation() throws Exception {
     initContactCreation("add new");
     fillContactForm(new GroupContact("Anastasia", "Mistonova", "Island", "856214111", "545", "sir.jecman@yandex.ru"));
-    submitContactCreation("(//input[@name='submit'])[2]");
+    submitContactCreation("submit");
     logout("Logout");
   }
+
 
   private void initContactCreation(String s) {
     wd.findElement(By.linkText(s)).click();
@@ -62,9 +65,10 @@ public class ContactCreationTests {
     wd.findElement(By.name("email")).sendKeys(groupContact.getEmail());
   }
 
-  private void submitContactCreation(String s) {
-    wd.findElement(By.xpath(s)).click();
-  }
+
+  private void submitContactCreation(String submit) {
+    wd.findElement(By.name(submit)).click();
+   }
 
   private void logout(String logout) {
     wd.findElement(By.linkText(logout)).click();
